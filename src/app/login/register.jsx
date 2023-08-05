@@ -70,7 +70,7 @@ const Register = () => {
                         onChange={handleChange}
                         className="input absolute top-0 left-0 w-full border-2 border-solid border-red-600 outline-none bg-none p-[10px] rounded-[10px]"
                     />
-                    <label>
+                    <label className="label">
                         First Name
                     </label>
                 </div>
@@ -82,7 +82,7 @@ const Register = () => {
                         onChange={handleChange}
                         className="input absolute top-0 left-0 w-full border-2 border-solid border-red-600 outline-none bg-none p-[10px] rounded-[10px]"
                     />
-                    <label>
+                    <label className="label">
                         Last Name
                     </label>
                 </div>
@@ -94,7 +94,7 @@ const Register = () => {
                         onChange={handleChange}
                         className="input absolute top-0 left-0 w-full border-2 border-solid border-red-600 outline-none bg-none p-[10px] rounded-[10px]"
                     />
-                    <label>
+                    <label className="label">
                         Email
                     </label>
                 </div>
@@ -106,7 +106,7 @@ const Register = () => {
                         onChange={handleChange}
                         className="input absolute top-0 left-0 w-full border-2 border-solid border-red-600 outline-none bg-none p-[10px] rounded-[10px]"
                     />
-                    <label>
+                    <label className="label">
                         Password
                     </label>
                 </div>
