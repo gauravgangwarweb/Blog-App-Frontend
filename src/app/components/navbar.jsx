@@ -21,7 +21,7 @@ const Navbar = () => {
           <i className="fa-solid fa-angle-down fa-lg text-black"></i>
         </div>
       ) : (
-        <button className="flex justify-center items-center bg-red-500 hover:bg-red-600 font-bold">
+        <button className="flex justify-center items-center bg-red-500 hover:bg-red-600 font-medium text-white px-2.5 py-1.5 rounded-lg">
           <Link href="/login">
             Login
           </Link>

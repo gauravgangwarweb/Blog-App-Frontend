@@ -46,8 +46,8 @@ label {
   font-family: sans-serif;
 }
 
-.center .inputbox input:focus ~ label,
-.center .inputbox input:valid ~ label {
+.center .inputbox .input:focus ~ label,
+.center .inputbox .input:valid ~ label {
   transform: translateX(-13px) translateY(-40px);
   font-size: 1em;
 }
