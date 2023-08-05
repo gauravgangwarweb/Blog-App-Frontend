@@ -1,6 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "../api/api";
 import Card from "../components/card";
+import NewPostButton from "./newPostButton";
 
 const getData = async () => {
     try {
@@ -20,7 +21,7 @@ const Hero2 = async () => {
         <div className="px-8 mt-6">
             <div className="flex justify-between border-b-2 border-black">
                 <div></div>
-                <button className="flex justify-center items-center bg-red-500 hover:bg-red-600 font-medium text-white px-2.5 py-1.5 rounded-lg mb-2">New Post</button>
+                <NewPostButton />
             </div>
             <div>
                 {post.data.length == 0 || post == null ?
