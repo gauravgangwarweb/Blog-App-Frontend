@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import Cookies from "js-cookie";
-
 import { baseUrl } from "../api/api";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "@/redux/reducers/utilsSlice";
-
 
 const Login = () => {
     const[loading, setLoading] = useState(false)
