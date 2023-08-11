@@ -5,7 +5,7 @@ import Hero2 from './home/hero2'
 
 const Home = () => {
   return (
-    <div className="px-2">
+    <div>
       <div className="toast-container"><ToastContainer limit={1} /></div>
       <Navbar />
       <Hero1 />

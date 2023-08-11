@@ -11,22 +11,25 @@ const Navbar = () => {
   useEffect(() => {
     setImage(avatar)
   }, [])
-  
+
   return (
-    <div className="w-full flex justify-between px-8 py-3 border-b-2 border-gray-500 items-center bg-[#eeeeee] fixed">
-      <img src="blog.png" alt="" className="w-[120px]" />
-      {image ? (
-        <div className="flex items-center gap-3">
-          <img src={avatar} alt="" className="w-[45px] rounded-full" />
-          <i className="fa-solid fa-angle-down fa-lg text-black"></i>
-        </div>
-      ) : (
-        <button className="flex justify-center items-center bg-red-500 hover:bg-red-600 font-medium text-white px-2.5 py-1.5 rounded-lg">
-          <Link href="/login">
-            Login
-          </Link>
-        </button>
-      )}
+    <div className="items-center fixed w-full px-3">
+      <div className="w-full flex justify-between px-4 py-3 bg-[#fff]">
+        <img src="blog.png" alt="" className="w-[120px]" />
+        {image ? (
+          <div className="flex items-center gap-3">
+            <img src={avatar} alt="" className="w-[45px] rounded-full" />
+            <i className="fa-solid fa-angle-down fa-lg text-black"></i>
+          </div>
+        ) : (
+          <button className="flex justify-center items-center bg-red-500 hover:bg-red-600 font-medium text-white px-2.5 py-1.5 rounded-lg">
+            <Link href="/login">
+              Login
+            </Link>
+          </button>
+        )}
+      </div>
+      <hr className="border-[#ff0000] border-[1px]" />
     </div>
   );
 };

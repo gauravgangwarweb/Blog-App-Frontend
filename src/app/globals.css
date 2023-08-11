@@ -4,6 +4,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap')
 
 :root {
   padding: 0;
@@ -25,6 +26,10 @@ body {
 .caveat {
   font-family: 'Caveat', cursive;
   font-weight: 400;
+}
+
+.crimson {
+  font-family: 'Crimson Text', serif;
 }
 
 .cover {
