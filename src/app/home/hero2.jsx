@@ -16,6 +16,7 @@ const getData = async () => {
 
 const Hero2 = async () => {
     const post = await getData()
+    console.log(post.data)
 
     return (
         <div className="px-8 mt-6">
@@ -23,11 +24,14 @@ const Hero2 = async () => {
                 <div></div>
                 <NewPostButton />
             </div>
-            <div>
-                {post.data.length == 0 || post == null ?
+            <div className="mt-5">
+                <Card />
+                {/* {post.data.length == 0 || post == null ?
                     <p>There are no posts to show</p> :
-                    <Card />
-                }
+                    post.data.map(e => (
+                        <Card title={e.title} imageUrl={e.imageUrl} />
+                    ))
+                } */}
             </div>
         </div>
     );
