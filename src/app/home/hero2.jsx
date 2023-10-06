@@ -24,14 +24,19 @@ const Hero2 = async () => {
                 <div></div>
                 <NewPostButton />
             </div>
-            <div className="mt-5">
-                <Card />
-                {/* {post.data.length == 0 || post == null ?
+            <div className="mt-5 px-24 grid grid-cols-3 gap-7 pb-10">
+                {post.data.length == 0 || post == null ?
                     <p>There are no posts to show</p> :
                     post.data.map(e => (
-                        <Card title={e.title} imageUrl={e.imageUrl} />
+                        <Card 
+                        key={e._id}
+                        id={e._id}
+                        title={e.title} 
+                        imageUrl={e.imageUrl} 
+                        name={e.publicId}
+                        />
                     ))
-                } */}
+                }
             </div>
         </div>
     );
