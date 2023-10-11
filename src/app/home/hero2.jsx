@@ -9,22 +9,20 @@ const getData = async () => {
         return response.data;
     } catch (error) {
         console.log(error);
-        // You may want to handle the error and return an appropriate value here
         return null;
     }
 }
 
 const Hero2 = async () => {
     const post = await getData()
-    console.log(post.data)
 
     return (
-        <div className="px-8 mt-6">
-            <div className="flex justify-between border-b-2 border-black">
+        <div className="md:px-8 mt-6">
+            <div className="flex justify-between border-b-2 border-black px-2">
                 <div></div>
                 <NewPostButton />
             </div>
-            <div className="mt-5 px-24 grid grid-cols-3 gap-7 pb-10">
+            <div className="mt-5 md:px-24 grid md:grid-cols-3 items-center gap-7 pb-10 px-2">
                 {post.data.length == 0 || post == null ?
                     <p>There are no posts to show</p> :
                     post.data.map(e => (

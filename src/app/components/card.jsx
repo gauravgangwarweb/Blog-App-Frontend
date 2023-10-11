@@ -1,9 +1,8 @@
 "use client"
 
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";    
 import { setPost } from "@/redux/reducers/postSlice";
-
 
 const Card = (props) => {
     const dispatch = useDispatch()
@@ -12,7 +11,8 @@ const Card = (props) => {
         <div
             className="flex flex-col gap-2 justify-center py-3 pb-5 rounded-lg bg-[#EEEEEE] cursor-pointer box-shadow"
             onClick={() => {
-                dispatch(setPost(props.id))
+                dispatch(setPost(props.id));
+                router.push('/post')
             }}
         >
             <div className="rounded-lg flex justify-center w-42 h-42 overflow-hidden">
