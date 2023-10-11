@@ -1,91 +1,131 @@
 "use client"
 
-import axios from 'axios';
-import dotenv from 'dotenv'
-import { Image } from 'cloudinary-react';
-import { useState } from 'react';
-import Navbar from '../components/navbar';
+import { Slide, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react";
+import Navbar from "../components/navbar";
+import { cloudName, imageUpload } from "../assets/cloudinaryFunctions";
+import Quill from "quill";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+import { baseUrl } from "../api/api";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const NewPost = () => {
     const [imageUrl, setImageUrl] = useState("")
+    const [title, setTitle] = useState("")
     const [publicId, setPublicId] = useState("")
-    const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME
-    const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET
+    const [editorValue, setEditorValue] = useState("")
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
+    const userId = Cookies.get("id")
+    const token = Cookies.get("token")
+    console.log(token)
+    const handleImageUpload = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
+        const data = await imageUpload(file)
+        setImageUrl(data.url)
+        setPublicId(data.publicId)
+    }
 
-    const handleImageUpload = async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', upload_preset);
-
-        try {
-            const response = await axios.post(
-                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-                formData
-            )
-
-            setImageUrl(response.data.url)
-            setPublicId(response.data.public_id)
-        } catch (error) {
-            console.error("Error while uploading image:", error)
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        const toastId = "post"
+        const postData = {
+            title,
+            publicId,
+            imageUrl,
+            userId,
+            body: editorValue
         }
-    }
-
-    const handleDrop = (e) => {
-        e.preventDefault()
-        const file = e.dataTransfer.files[0];
-        handleImageUpload(file)
-    }
-
-    const handelDragOver = (e) => {
-        e.preventDefault()
+        console.log(postData);
+        if (!postData.title || !postData.publicId || !postData.imageUrl || !postData.userId || !postData.body) {
+            setLoading(false)
+            toast.error("Some of the post fields are empty. Please fill in all required fields.", {
+                position: toast.POSITION.TOP_CENTER,
+                toastId
+            })
+        } else {
+            await axios.post(`${baseUrl}/post/new`, postData, {
+                headers: {
+                    Authorization: token, // Include authorization header if required
+                },
+            })
+                .then((res) => {
+                    setLoading(false)
+                    console.log(res);
+                    toast.success(res.data.msg, {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        toastId,
+                        transition: Slide
+                    })
+                    router.push('/')
+                })
+                .catch((error) => {
+                    console.error(error)
+                    setLoading(false)
+                    toast.error(error, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId
+                    })
+                })
+        }
     }
 
     return (
         <div>
             <Navbar />
-            <div className="w-full px-8 py-3 pt-24">
-                <div className="flex justify-between pr-2">
-                    <p className="text-4xl font-bold">Create your post</p>
-                    <button className="text-white text-lg bg-[#ff0000] px-3 py-1 rounded-lg mt-5">Publish</button>
-                </div>
-                <div className="px-8 py-5 border-4 border-[#ff0000] rounded-lg mt-8">
-                    <div
-                        className="border-2 border-dashed border-[grey] p-5 py-32 mb-3 flex justify-center"
-                        onDrop={handleDrop}
-                        onDragOver={handelDragOver}
-                    >
-                        {
-                            imageUrl ? <Image cloudName={cloudName} publicId={publicId} width="300" /> : <p>Drag and drop your image here</p>
-                        }
-                    </div>
-                    <form className="center">
-                        <div className="flex flex-col relative mb-[35px] w-full h-[50px] inputbox mt-10">
+            <div className="toast-container"><ToastContainer limit={1} /></div>
+            <div className="pt-28 px-8 gap-2 flex flex-col items-center">
+                <div className="w-3/4 flex px-20 border-2 border-dashed py-10">
+                    {
+                        !imageUrl ?
                             <input
-                                type="text"
-                                name="title"
-                                required
-                                className="input absolute top-0 left-0 w-full border-2 border-solid border-black outline-none bg-none p-[10px] rounded-[10px]"
-                                onChange={e => console.log("hii")}
-                            />
-                            <label>
-                                Title
-                            </label>
-                        </div>
-                        <div className="flex flex-col relative mb-[35px] w-full h-[50px] inputbox mt-10">
-                            <textarea
-                                type="text"
-                                name="body"
-                                required
-                                className="input absolute top-0 left-0 w-full border-2 border-solid border-black outline-none bg-none p-[10px] rounded-[10px]"
-                                onChange={e => console.log("hii")}
-                            />
-                            <label>
-                                Tell Your Story
-                            </label>
-                        </div>
-
-                    </form>
+                                type="file"
+                                onChange={handleImageUpload}
+                                className="items-start justify-start"
+                            /> :
+                            <img src={imageUrl} alt="uploaded image" className="w-32" />
+                    }
                 </div>
+                <form className="w-3/4 flex flex-col gap-5 px-20 border-2 py-4">
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Title"
+                        className="text-4xl border placeholder:pl-1 crimson w-full px-2 py-1"
+                        onChange={(e) => { setTitle(e.target.value) }}
+                    />
+                    <div className="border-black border w-full">
+                        <ReactQuill
+                            value={editorValue}
+                            onChange={value => setEditorValue(value)}
+                            modules={{
+                                toolbar: [
+                                    [{ 'header': [1, 2, false] }],
+                                    [{ font: [] }, { size: [] }, 'bold', 'italic', 'underline', 'strike', 'blockquote', { color: [] }],
+                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }, 'code-block', 'blockquote'],
+                                    ['link', 'image'],
+                                    ['clean']
+                                ]
+                            }}
+                            theme="snow"
+                            placeholder="Add your Story"
+                        />
+                    </div>
+                    <button onClick={handleSubmit} className="bg-red-500 w-36 self-end text-white py-1 text-lg font-bold rounded-lg">Post</button>
+                </form>
+
             </div>
         </div>
     );
