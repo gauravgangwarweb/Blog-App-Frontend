@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
-import Quill from "quill";
-import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -57,7 +55,7 @@ const Post = () => {
     return (
         <div>
             <Navbar />
-            <div className="px-48 flex flex-col items-center pt-28">
+            <div className="md:px-48 flex flex-col items-center pt-28">
                 {
                     loading ?
                         <p>Post Loading</p> :
