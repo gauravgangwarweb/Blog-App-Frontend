@@ -1,16 +1,15 @@
 "use client"
 
-import { Slide, ToastContainer } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
-import { cloudName, imageUpload } from "../assets/cloudinaryFunctions";
+import { imageUpload } from "../assets/cloudinaryFunctions";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { baseUrl } from "../api/api";
 import axios from "axios";
 import cookies from "js-cookie";
-import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 const NewPost = () => {
