@@ -22,9 +22,9 @@ const NewPost = () => {
     const [token, setToken] = useState("")
     const router = useRouter()
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            setuserId(cookies.get("id"));
-            setToken(cookies.get("token"))
+        if (typeof window !== 'undefined') {
+            setuserId(cookies.get("id") || '');
+            setToken(cookies.get("token") || '');
         }
     }, [])
     const handleImageUpload = async (e) => {
