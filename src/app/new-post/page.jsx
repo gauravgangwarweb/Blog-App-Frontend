@@ -2,15 +2,14 @@
 
 import { Slide, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import { cloudName, imageUpload } from "../assets/cloudinaryFunctions";
-import Quill from "quill";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { baseUrl } from "../api/api";
 import axios from "axios";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -20,10 +19,13 @@ const NewPost = () => {
     const [publicId, setPublicId] = useState("")
     const [editorValue, setEditorValue] = useState("")
     const [loading, setLoading] = useState(false)
+    const [userId, setuserId] = useState("")
+    const [token, setToken] = useState("")
     const router = useRouter()
-    const userId = Cookies.get("id")
-    const token = Cookies.get("token")
-    console.log(token)
+    useEffect(() => {
+        setuserId(cookies.get("id"));
+        setToken(cookies.get("token"))
+    }, [])
     const handleImageUpload = async (e) => {
         e.preventDefault()
         const file = e.target.files[0]
@@ -31,7 +33,7 @@ const NewPost = () => {
         setImageUrl(data.url)
         setPublicId(data.publicId)
     }
-
+   
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -53,7 +55,7 @@ const NewPost = () => {
         } else {
             await axios.post(`${baseUrl}/post/new`, postData, {
                 headers: {
-                    Authorization: token, // Include authorization header if required
+                    Authorization: token, 
                 },
             })
                 .then((res) => {
