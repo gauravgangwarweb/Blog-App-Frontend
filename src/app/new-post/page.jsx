@@ -23,8 +23,10 @@ const NewPost = () => {
     const [token, setToken] = useState("")
     const router = useRouter()
     useEffect(() => {
-        setuserId(cookies.get("id"));
-        setToken(cookies.get("token"))
+        if (typeof window !== "undefined") {
+            setuserId(cookies.get("id"));
+            setToken(cookies.get("token"))
+        }
     }, [])
     const handleImageUpload = async (e) => {
         e.preventDefault()
@@ -33,7 +35,7 @@ const NewPost = () => {
         setImageUrl(data.url)
         setPublicId(data.publicId)
     }
-   
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -55,7 +57,7 @@ const NewPost = () => {
         } else {
             await axios.post(`${baseUrl}/post/new`, postData, {
                 headers: {
-                    Authorization: token, 
+                    Authorization: token,
                 },
             })
                 .then((res) => {
